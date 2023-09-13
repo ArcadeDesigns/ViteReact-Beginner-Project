@@ -1,0 +1,43 @@
+import { Fragment, useState } from "react";
+
+interface ListGroupProps {
+  items: string[];
+  heading: string;
+
+  onSelectItem: (item: string) => void;
+}
+
+function ListGroup({ items, heading, onSelectItem }: ListGroupProps) {
+  // Hook tells react there are variables
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  return (
+    <Fragment>
+      <div className="container">
+        <h1>{heading}</h1>
+        {items.length === 0 && <p>No item found</p>}
+
+        <ul className="list-group container">
+          {items.map((item, index) => (
+            <li
+              className={
+                selectedIndex === index
+                  ? "list-group-item active"
+                  : "list-group-item"
+              }
+              key={item}
+              onClick={() => {
+                setSelectedIndex(index);
+                onSelectItem(item);
+              }}
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Fragment>
+  );
+}
+
+export default ListGroup;
